@@ -10,6 +10,9 @@ int _sumDigit(int n);
 int _PrimesTogetherNum(int n, int m);
 int _IsDivisor(int x, int n);
 int _IsPrimes(int n);
+int _nthFiboNum(int n);
+int _IsDayKhongTang(int n);
+int _IsChiChuaSoChan(int n);
 void _Exercise_1(void);
 void _Exercise_2(void);
 void _Exercise_3(void);
@@ -324,13 +327,15 @@ int _ReversibleNum(int n)
 {
     char _n[50];
     int count = 0;
+    // Dua cac chu so vao mang dao nguoc. VD 4567 vao mang la [7][6][5][4]
     while (n > 0)
     {
         _n[count] = n % 10;
         count++;
         n = n / 10;
     }
-    for (int i = 0; i < count; i++)
+    // So sanh so dau va so cuoi, dich dan vao trong
+    for (int i = 0; i <= count/2; i++)
     {
         if (_n[i] != _n[count - i - 1])
         {
@@ -657,17 +662,103 @@ void _Exercise_11(void)
     }
 
 }
+
+
+int _IsDayKhongTang(int n) 
+{
+    int soDonVi = 0;
+    int soChuc = 0;
+    soChuc = n % 10;    
+    while (n/10)
+    {
+        n = n / 10;     
+        soDonVi = soChuc;  
+        soChuc = n % 10;   
+        if (soChuc < soDonVi) return 0;
+    }
+    return 1;
+}
 void _Exercise_12(void)
 {
     std::cout << "--------------Bai tap 12---------------------\n";
+    std::cout << "Cac so nguyen co 8 chu so thoa man:\n";
+    std::cout << "- La so nguyen to\n";
+    std::cout << "- Tong cac chu so cua so do la so nguyen to\n";
+    std::cout << "- Cac chu so tu trai qua phai tao thanh 1 day khong tang\n";
+    for (int i = 10000000; i < 100000000; i++)
+    {
+        if (_IsDayKhongTang(i) && _IsPrimes(_sumDigit(i)) && (_IsPrimes(i)))
+        {
+            std::cout << i << "   ";
+        }
+    }
 }
+
+int _IsChiChuaSoChan(int n)
+{
+    while (n)
+    {
+        if (n % 2 == 1) return 0;
+        n = n / 10;
+    }
+    return 1;
+}
+
 void _Exercise_13(void)
 {
     std::cout << "--------------Bai tap 13---------------------\n";
+    std::cout << "Cac so nguyen co 9 chu so thoa man:\n";
+    std::cout << "- La so thuan nghich\n";
+    std::cout << "- Chi chua cac so chan\n";
+    std::cout << "- Tong cac chu so cua no chia het cho 5\n";
+    for (int i = 100000000; i < 1000000000; i++)
+    {
+        if ((_IsChiChuaSoChan(i)) && (_ReversibleNum(i)) &&(_sumDigit(i) % 5 == 0))
+        {
+            std::cout << i << "   ";
+        }
+    }
+    
 }
+
+int _IsAllDigitIsPrimes(int n)
+{
+    while (n)
+    {
+        if (_IsPrimes(n % 10) == 0) return 0;
+        n = n / 10;
+    }
+    return 1;
+}
+
+int _ReverseNum(int n)
+{
+    int m = 0;
+    while (n)
+    {
+        m = 10 * m + n % 10;
+        n = n / 10;
+    }
+    return m;
+}
+
 void _Exercise_14(void)
 {
     std::cout << "--------------Bai tap 14---------------------\n";
+    std::cout << "Cac so nguyen co 9 chu so thoa man:\n";
+    std::cout << "- La so nguyen to\n";
+    std::cout << "- Tat ca cac chu so la so nguyen to\n";
+    std::cout << "- Dao cua no cung la mot so nguyen to\n";
+    std::cout << "- Tong cac chu so cua no cung la mot so nguyen to\n";
+    for (int i = 100000000; i < 1000000000; i++)
+    {
+        if ((_IsPrimes(_sumDigit(i))) && (_IsAllDigitIsPrimes(i)) && (_IsPrimes(i))&&(_IsPrimes(_ReverseNum(i))))
+        //if (_IsPrimes(_ReverseNum(i)))
+        {
+            std::cout << i << "   ";
+        }
+    }
+
 }
 void _Exercise_15(void)
 {
